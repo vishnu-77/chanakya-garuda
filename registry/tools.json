@@ -1,0 +1,5 @@
+[
+  {"id":"registry.list","description":"List registered tools","risk":"read","scope":"local"},
+  {"id":"lab.evidence","description":"Read existing scan evidence","risk":"read","scope":"local"},
+  {"id":"lab.scan","description":"Fixed isolated-lab TCP connect scan","risk":"active","scope":"lab-only","approval":"local-terminal"}
+]

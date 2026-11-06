@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chanakya-garuda"
+version = "0.1.0"
+description = "A governed AgentScope security assistant scaffold"
+requires-python = ">=3.11"
+dependencies = ["agentscope==2.0.10", "python-dotenv>=1.0,<2"]
+[project.optional-dependencies]
+voice = ["faster-whisper>=1.1,<2"]
+mcp = ["mcp>=1.10,<2"]
+dev = ["pytest>=8,<10"]
+[project.scripts]
+chanakya = "chanakya.cli:main"
+[tool.setuptools.packages.find]
+include = ["chanakya*"]

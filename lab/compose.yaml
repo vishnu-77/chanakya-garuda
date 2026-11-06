@@ -1,0 +1,27 @@
+name: chanakya-lab
+services:
+  target:
+    image: nginx:1.27-alpine
+    networks: [lab]
+    read_only: true
+    tmpfs: [/var/cache/nginx, /var/run, /tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 100
+    mem_limit: 128m
+  scanner:
+    build:
+      context: .
+      dockerfile: Scanner.Dockerfile
+    entrypoint: ["nmap"]
+    networks: [lab]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 100
+    mem_limit: 128m
+    profiles: [scanner]
+networks:
+  lab:
+    internal: true

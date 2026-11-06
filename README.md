@@ -1,16 +1,12 @@
 # Chanakya Garuda
 
-Local-first, security-first AI engineering assistant built incrementally on AgentScope, OpenRouter and governed tools.
+Architecture-first, local-first AI engineering assistant for authorised security research and everyday engineering work.
 
-**Status: Phase 0 / experimental scaffold.** No production credentials, unrestricted shell access, autonomous external scanning or self-authorised tool calls.
+**Phase 0 — experimental scaffold, not a production security boundary.**
 
-## Architecture
+## Quickstart
 
-See [system architecture](docs/architecture.md), [threat model](docs/threat-model.md), [delivery phases](docs/phases.md), and [ADR 0001](docs/adr/0001-controlled-tool-execution.md).
-
-## Local quickstart
-
-Python 3.11+ and Docker Compose are required for the optional lab.
+Python 3.11+; Docker Compose is optional for the local lab.
 
 ```bash
 python -m venv .venv
@@ -19,18 +15,23 @@ pip install -e '.[dev]'
 cp .env.example .env
 pytest -q
 chanakya tools
-# Set OPENROUTER_API_KEY in .env before invoking:
-chanakya ask 'Describe your available tools'
+# Set OPENROUTER_API_KEY in .env before using the model
+chanakya ask "Explain what tools you have"
+# Optional, isolated lab:
+chanakya lab-up
+chanakya lab-scan
+chanakya lab-down
 ```
 
-The lab uses a fixed Docker-internal target and an explicit confirmation: `chanakya lab-up`, `chanakya lab-scan`, `chanakya lab-down`.
+## Design
 
-**Security caveat:** CLI consent is a local demonstration, not authenticated, replay-safe authorisation. The model cannot invoke active scans. Container images and dependencies require supply-chain review before any hardened use.
+- [Architecture](docs/architecture.md)
+- [Threat model](docs/threat-model.md)
+- [Phased delivery and acceptance gates](docs/phases.md)
+- [ADR: Separate execution from reasoning](docs/adr/0001-controlled-tool-execution.md)
 
-## Roadmap
+Only catalogue discovery and evidence reading are exposed as model-callable tools. Active lab scanning is available **only** from the local CLI with explicit terminal confirmation. The scan's target and flags are fixed. The repository has no production cloud integrations or arbitrary shell agent.
 
-Phase 0: trusted skeleton and testable policies. Phase 1: OpenRouter limits, evidenced execution, MCP registry. Phase 2: verifier agent and workflows. Phase 3: voice, UI and scheduled personal workflows. See `docs/phases.md` for gates.
+**Not implemented:** hard local model spend caps, signed execution approvals, independent verifier, ToolHive connection, persistent task orchestration or a GUI. A provider-side OpenRouter spending limit is mandatory for initial experimentation. Never connect organisational secrets or production assets without independent authorisation.
 
-## Licence
-
-No licence has been selected yet; the code is publicly visible, but no open-source reuse permission is granted by default.
+**Licence:** none selected yet; public visibility is not an open-source licence.
